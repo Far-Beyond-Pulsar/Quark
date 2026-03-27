@@ -91,6 +91,9 @@ pub trait Command: Send + Sync {
 
     /// Executes the command asynchronously with the provided arguments.
     ///
+    /// For sync commands, this wraps the sync execution in a ready future.
+    /// For async commands, this should be overridden to return a proper async future.
+    ///
     /// # Arguments
     ///
     /// * `args` - The parsed argument strings to pass to the command
@@ -101,12 +104,13 @@ pub trait Command: Send + Sync {
     /// - The argument count is incorrect
     /// - An argument cannot be converted to the expected type
     /// - The command execution fails
-    /// - This is a sync command (should use `execute()` instead)
     fn execute_async<'a>(
         &'a self,
-        _args: Vec<String>,
+        args: Vec<String>,
     ) -> Pin<Box<dyn Future<Output = Result<()>> + Send + 'a>> {
-        Box::pin(async { Err(CommandError::SyncCommandInAsyncContext) })
+        // Default implementation for sync commands: wrap sync execution in a ready future
+        let result = self.execute(args);
+        Box::pin(async move { result })
     }
 }
 
