@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(findstr:*)",
+      "Bash(dir:*)",
+      "Bash(cargo build:*)",
+      "Bash(cargo test:*)"
+    ]
+  }
+}

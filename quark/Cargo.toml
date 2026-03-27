@@ -1,0 +1,18 @@
+[package]
+name = "quark"
+version.workspace = true
+authors.workspace = true
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+description = "Type-safe command system for the Pulsar game engine"
+keywords = ["command", "parser", "game", "type-safe", "pulsar"]
+categories = ["game-development", "command-line-interface"]
+
+[dependencies]
+quark-macros = { path = "../quark-macros", version = "0.1.0" }
+thiserror = "2.0"
+
+[dev-dependencies]
+tokio = { version = "1.0", features = ["rt", "macros"] }
+pollster = "0.3"
